@@ -19,8 +19,8 @@ from nlpete.data.fields import CopyMapField
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 
-@DatasetReader.register("copynet")
-class CopyNetDatasetReader(DatasetReader):
+@DatasetReader.register("cnndm_copynet")
+class CNNDMCopyNetDatasetReader(DatasetReader):
     """
     Read a tsv file containing paired sequences, and create a dataset suitable for a
     ``CopyNet`` model, or any model with a matching API.
