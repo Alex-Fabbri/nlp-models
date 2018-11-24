@@ -2,9 +2,9 @@
   "dataset_reader": {
     "type": "language_modeling_fairseq",
     "lazy": true,
-     "token_indexers":  
+     "token_indexers":
       {
-      "tokens": 
+      "tokens":
         {
         "type": "single_id"
         }
@@ -20,13 +20,13 @@
      "max_vocab_size": {"tokens": 60000}
   },
   "model": {
-    "type": "fairseq_transformer_lm", 
+    "type": "fairseq_transformer_lm",
     "eval_metric": "perplexity",
-    "decoder_embed_dim": 512, 
-    "decoder_output_dim": 512, 
-    "decoder_input_dim": 512, 
-    "decoder_ffn_embed_dim": 2048, 
-    "decoder_layers": 6, 
+    "decoder_embed_dim": 512,
+    "decoder_output_dim": 512,
+    "decoder_input_dim": 512,
+    "decoder_ffn_embed_dim": 2048,
+    "decoder_layers": 6,
     "decoder_attention_heads": 8
   },
  "iterator": {

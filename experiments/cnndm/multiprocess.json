@@ -7,10 +7,10 @@
     "type": "copynet",
     "truncate_source_len": 400,
     "truncate_target_len": 100,
-    "source_tokenizer": 
+    "source_tokenizer":
     {
         "type" : "word",
-        "word_splitter": 
+        "word_splitter":
         {
             "type": "simple"
         }
@@ -93,7 +93,7 @@
   "iterator": {
     "type": "multiprocess",
     "num_workers": 20,
-    "base_iterator": 
+    "base_iterator":
     {
     "type": "bucket",
     "padding_noise": 0.0,
