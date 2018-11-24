@@ -1,11 +1,25 @@
 {
   "dataset_reader": {
-    "target_namespace": "target_tokens",
+    "type" : "multiprocess",
+    "num_workers" : 20,
+  "base_reader": {
+    "target_namespace": "joined_tokens",
     "type": "copynet",
+    "truncate_source_len": 400,
+    "truncate_target_len": 100,
+    "source_tokenizer": 
+    {
+        "type" : "word",
+        "word_splitter": 
+        {
+            "type": "simple"
+        }
+
+    },
     "source_token_indexers": {
       "tokens": {
         "type": "single_id",
-        "namespace": "source_tokens"
+        "namespace": "joined_tokens"
       },
       "token_characters": {
         "type": "characters"
@@ -13,27 +27,31 @@
     },
     "target_token_indexers": {
       "tokens": {
-        "namespace": "target_tokens"
+        "namespace": "joined_tokens"
       }
     }
+
+   }
   },
   "vocabulary": {
     "min_count": {
-      "source_tokens": 4,
-      "target_tokens": 4
+      "joined_tokens": 4
     },
     "tokens_to_add": {
-        "target_tokens": ["@COPY@"]
+        "joined_tokens": ["@COPY@"]
     }
   },
-  "train_data_path": "data/cnndm/train.txt",
-  "validation_data_path": "data/cnndm/val.txt",
+  "train_data_path": "data/cnndm/multiple/train/train*",
+  "validation_data_path": "data/cnndm/multiple/valid/val*",
+  "datasets_for_vocab_creation": ["train"],
   "model": {
     "type": "copynet",
+    "source_namespace": "joined_tokens",
+    "target_namespace": "joined_tokens",
     "source_embedder": {
       "tokens": {
         "type": "embedding",
-        "vocab_namespace": "source_tokens",
+        "vocab_namespace": "joined_tokens",
         "embedding_dim": 25,
         "trainable": true
       },
@@ -73,10 +91,15 @@
     }
   },
   "iterator": {
+    "type": "multiprocess",
+    "num_workers": 20,
+    "base_iterator": 
+    {
     "type": "bucket",
     "padding_noise": 0.0,
     "batch_size" : 32,
     "sorting_keys": [["source_tokens", "num_tokens"]]
+    }
   },
   "trainer": {
     "optimizer": {
@@ -89,7 +112,7 @@
       "t_mul": 1.5,
       "eta_mul": 0.9
     },
-    "num_epochs": 80,
+    "num_epochs": 2,
     "cuda_device": 0,
     "should_log_learning_rate": true,
     "should_log_parameter_statistics": false
