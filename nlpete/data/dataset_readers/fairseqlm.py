@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import logging
 
 from overrides import overrides
@@ -70,7 +70,7 @@ class LanguageModelingReaderFairseq(DatasetReader):
         file_path = cached_path(file_path)
 
         with open(file_path, "r") as text_file:
-            cur_output = []
+            cur_output = [] # type: ignore
             yield_now = False
             for line in text_file:
                 #tokenized_string = self._tokenizer.tokenize(f"{START_SYMBOL} " + line.strip() + f" {END_SYMBOL}")

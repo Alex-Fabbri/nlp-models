@@ -61,14 +61,14 @@ class Mem2SeqDatasetReader(DatasetReader):
     @staticmethod
     def _create_target_to_source_sentinel_array(tokenized_source: List[Token],
                                                 tokenized_target: List[Token]) -> np.array:
-        target_to_source_sentinel_array: List[int] = []
+        target_to_source_sentinel_array: List[List[int]] = []
         for target_token in tokenized_target[1:-1]:
             index = [loc for loc, val in enumerate(tokenized_source[1:-1]) if val == target_token]
             if index:
-                index = max(index)
+                cur_index = max(index)
             else:
-                index = len(tokenized_source[1:-1])
-            target_to_source_sentinel_array.append([index])
+                cur_index = len(tokenized_source[1:-1])
+            target_to_source_sentinel_array.append([cur_index])
         target_to_source_sentinel_array.append([len(tokenized_source)-1])
         return np.array(target_to_source_sentinel_array)
 
