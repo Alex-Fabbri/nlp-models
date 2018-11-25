@@ -1,4 +1,5 @@
 # nlp-models
+# Alex Fabbri fork note -- familiarizing myself with the tests. set up circleci, will update with my dashboard and also update code to pass check very soon. 
 
 [![CircleCI](https://circleci.com/gh/epwalsh/nlp-models.svg?style=svg)](https://circleci.com/gh/epwalsh/nlp-models)
 [![codecov](https://codecov.io/gh/epwalsh/nlp-models/branch/master/graph/badge.svg)](https://codecov.io/gh/epwalsh/nlp-models)
