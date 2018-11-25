@@ -4,7 +4,6 @@ import logging
 from overrides import overrides
 
 from allennlp.common.file_utils import cached_path
-from allennlp.common.tqdm import Tqdm
 from allennlp.data.instance import Instance
 from allennlp.data.tokenizers.tokenizer import Tokenizer
 from allennlp.data.tokenizers import WordTokenizer
@@ -12,7 +11,7 @@ from allennlp.data.dataset_readers.dataset_reader import DatasetReader
 from allennlp.data.token_indexers.token_indexer import TokenIndexer
 from allennlp.data.fields import TextField
 from allennlp.data.token_indexers import SingleIdTokenIndexer
-from allennlp.common.util import START_SYMBOL, END_SYMBOL
+from allennlp.common.util import END_SYMBOL
 
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
@@ -42,6 +41,7 @@ class LanguageModelingReaderFairseq(DatasetReader):
         a ``SingleIdTokenIndexer`` here, we use the first one you specify.  Otherwise, we create
         one with default parameters.
     """
+
     def __init__(self,
                  tokens_per_instance: int = None,
                  tokenizer: Tokenizer = None,
@@ -77,7 +77,7 @@ class LanguageModelingReaderFairseq(DatasetReader):
                 tokenized_string = self._tokenizer.tokenize(line.strip() + f" {END_SYMBOL}")
                 if self._tokens_per_instance is not None:
                     cur_output.extend(tokenized_string)
-                    if len(cur_output)  > self._tokens_per_instance:
+                    if len(cur_output) > self._tokens_per_instance:
                         tokenized_string = cur_output[:self._tokens_per_instance]
                         cur_output = cur_output[self._tokens_per_instance+1:]
                         yield_now = True
@@ -85,7 +85,7 @@ class LanguageModelingReaderFairseq(DatasetReader):
                     yield_now = True
                 if yield_now:
                     input_field = TextField(tokenized_string[:-1], self._token_indexers)
-                    output_field = TextField(tokenized_string[1:], self._output_indexer)
+                    #output_field = TextField(tokenized_string[1:], self._output_indexer)
                     yield Instance({'input_tokens': input_field})
 
     @overrides

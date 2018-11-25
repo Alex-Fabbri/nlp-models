@@ -1,20 +1,18 @@
-from collections import Counter
-import math
-from typing import Iterable, Tuple, Dict, Set
-
+from typing import Dict
 from overrides import overrides
+
+#import numpy as np
 import torch
+import torch.nn.functional as F
 
 from allennlp.training.metrics.metric import Metric
-import torch.nn.functional as F
-import numpy as np
 
 def perplexity_func(preds, targs):
-    lprobs =  F.log_softmax(preds, dim=-1)
+    lprobs = F.log_softmax(preds, dim=-1)
     lprobs = lprobs.view(-1, lprobs.size(-1))
     targs = targs.view(-1)
-    l1 = torch.nn.NLLLoss()
-    loss = l1(lprobs, targs)
+    loss_func = torch.nn.NLLLoss()
+    loss = loss_func(lprobs, targs)
     return loss
 
 @Metric.register("perplexity")
@@ -37,6 +35,8 @@ class Perplexity(Metric):
     def get_metric(self, reset: bool = False) -> Dict[str, float]:
         if reset:
             self.reset()
-        if len(self.losses) == 0:
-            return {"perplexity": 0}
-        return {"perplexity": np.exp(np.mean(self.losses))}
+        # TODO check perplexity
+        return {"perplexity": 0}
+        #if len(self.losses) == 0:
+        #    return {"perplexity": 0}
+        #return {"perplexity": np.exp(np.mean(self.losses))}

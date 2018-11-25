@@ -54,8 +54,8 @@ class CopyNetDatasetReader(DatasetReader):
                  target_tokenizer: Tokenizer = None,
                  source_token_indexers: Dict[str, TokenIndexer] = None,
                  target_token_indexers: Dict[str, TokenIndexer] = None,
-                 truncate_source_len: int=None,
-                 truncate_target_len: int=None,
+                 truncate_source_len: int = None,
+                 truncate_target_len: int = None,
                  lazy: bool = False) -> None:
         super().__init__(lazy)
         self._target_namespace = target_namespace
