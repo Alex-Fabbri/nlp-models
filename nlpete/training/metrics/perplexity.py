@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 from overrides import overrides
 
 #import numpy as np
@@ -17,9 +17,8 @@ def perplexity_func(preds, targs):
 
 @Metric.register("perplexity")
 class Perplexity(Metric):
-    def __init__(self,
-                 losses: List[float] = []) -> None:
-        self.losses = losses
+    def __init__(self) -> None:
+        self.losses = [] # type: ignore
 
     @overrides
     def reset(self) -> None:
