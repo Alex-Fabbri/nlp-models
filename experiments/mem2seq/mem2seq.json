@@ -1,33 +1,31 @@
 {
   "dataset_reader": {
-    "target_namespace": "target_tokens",
-    "type": "mem2seq",
+    "target_namespace": "joined_tokens",
+    "type": "copynet",
     "source_token_indexers": {
       "tokens": {
         "type": "single_id",
-        "namespace": "source_tokens"
-      }
-    },
-    "target_token_indexers": {
-      "tokens": {
-        "type": "single_id",
-        "namespace": "target_tokens"
+        "namespace": "joined_tokens"
       }
     }
   },
   "vocabulary": {
-    "min_count": {
-      "source_tokens": 4,
-      "target_tokens": 4
-    },
     "tokens_to_add": {
-        "target_tokens": ["@COPY@"]
+        "joined_tokens": ["@COPY@"]
     }
   },
   "train_data_path": "data/greetings/train.tsv",
   "validation_data_path": "data/greetings/validation.tsv",
   "model": {
-    "type": "mem2seq"
+    "type": "mem2seq",
+    "source_namespace": "joined_tokens",
+    "target_namespace": "joined_tokens",
+    "target_embedding_dim": 10,
+    "beam_size": 3,
+    "max_decoding_steps": 20,
+    "token_based_metric": {
+      "type": "token_sequence_accuracy"
+    }
   },
   "iterator": {
     "type": "bucket",
@@ -47,7 +45,7 @@
       "eta_mul": 0.9
     },
     "num_epochs": 80,
-    "cuda_device": 0,
+    "cuda_device": 1,
     "should_log_learning_rate": true,
     "should_log_parameter_statistics": false
   }

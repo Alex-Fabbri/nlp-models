@@ -1,4 +1,3 @@
 from nlpete.data.dataset_readers.copynet import CopyNetDatasetReader
 from nlpete.data.dataset_readers.nl2bash import NL2BashDatasetReader
 from nlpete.data.dataset_readers.fairseqlm import LanguageModelingReaderFairseq
-from nlpete.data.dataset_readers.mem2seq import Mem2SeqDatasetReader
