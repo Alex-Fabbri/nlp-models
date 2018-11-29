@@ -1,7 +1,7 @@
 {
   "dataset_reader": {
     "type" : "multiprocess",
-    "num_workers" : 20,
+    "num_workers" : 2,
   "base_reader": {
     "target_namespace": "joined_tokens",
     "type": "copynet",
@@ -92,7 +92,7 @@
   },
   "iterator": {
     "type": "multiprocess",
-    "num_workers": 20,
+    "num_workers": 2,
     "base_iterator":
     {
     "type": "bucket",

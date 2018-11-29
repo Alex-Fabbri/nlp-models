@@ -150,8 +150,6 @@ class Mem2Seq(Model):
         -------
         Dict[str, torch.Tensor]
         """
-        if not self.training:
-            import pdb;pdb.set_trace()
         original_state = self._encode(source_tokens, source_to_source, source_to_target)
         #validation_state = copy.deepcopy(original_state)
         validation_state = {}
