@@ -2,6 +2,7 @@
   "dataset_reader": {
     "target_namespace": "joined_tokens",
     "type": "copynet",
+    "lazy": true,
     "truncate_source_len": 400,
     "truncate_target_len": 100,
     "source_token_indexers": {
@@ -58,7 +59,7 @@
       "eta_mul": 0.9
     },
     "num_epochs": 80,
-    "cuda_device": 7,
+    "cuda_device": 1,
     "patience": 10,
     "should_log_learning_rate": true,
     "should_log_parameter_statistics": false
