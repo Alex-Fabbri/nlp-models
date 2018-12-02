@@ -2,6 +2,9 @@
   "dataset_reader": {
     "target_namespace": "target_tokens",
     "type": "copynet",
+    "lazy": true,
+    "truncate_source_len": 400,
+    "truncate_target_len": 100,
     "source_token_indexers": {
       "tokens": {
         "type": "single_id",
@@ -18,16 +21,13 @@
     }
   },
   "vocabulary": {
-    "min_count": {
-      "source_tokens": 4,
-      "target_tokens": 4
-    },
+    "max_vocab_size" : 50000,
     "tokens_to_add": {
         "target_tokens": ["@COPY@"]
     }
   },
-  "train_data_path": "data/cnndm/multiple/train/train00",
-  "validation_data_path": "data/cnndm/multiple/valid/val00",
+  "train_data_path": "data/cnndm/train.txt",
+  "validation_data_path": "data/cnndm/val.txt",
   "model": {
     "type": "copynet",
     "source_embedder": {
@@ -90,6 +90,7 @@
       "eta_mul": 0.9
     },
     "num_epochs": 80,
+    "patience" : 10,
     "cuda_device": 0,
     "should_log_learning_rate": true,
     "should_log_parameter_statistics": false
