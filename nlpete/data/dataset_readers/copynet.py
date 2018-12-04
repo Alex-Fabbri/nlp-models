@@ -167,10 +167,10 @@ class CopyNetDatasetReader(DatasetReader):
         """
         # pylint: disable=arguments-differ
         tokenized_source = self._source_tokenizer.tokenize(source_string)
+        if self.truncate_source_len is not None:
+            tokenized_source = tokenized_source[:self.truncate_source_len]
         tokenized_source.insert(0, Token(START_SYMBOL))
         tokenized_source.append(Token(END_SYMBOL))
-        if self.truncate_source_len is not None:
-            tokenized_source = tokenized_source[:self.truncate_source_len+2]
         source_field = TextField(tokenized_source, self._source_token_indexers)
 
         # For token in the source sentence, we store a sparse array containing
@@ -195,10 +195,10 @@ class CopyNetDatasetReader(DatasetReader):
 
         if target_string is not None:
             tokenized_target = self._target_tokenizer.tokenize(target_string)
+            if self.truncate_target_len is not None:
+                tokenized_target = tokenized_target[:self.truncate_target_len]
             tokenized_target.insert(0, Token(START_SYMBOL))
             tokenized_target.append(Token(END_SYMBOL))
-            if self.truncate_target_len is not None:
-                tokenized_target = tokenized_target[:self.truncate_target_len+2]
             target_field = TextField(tokenized_target, self._target_token_indexers)
 
             # For each token in the target sentence, we keep track of the index
