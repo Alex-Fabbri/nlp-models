@@ -54,6 +54,8 @@ class CopyNetDatasetReader(DatasetReader):
                  target_tokenizer: Tokenizer = None,
                  source_token_indexers: Dict[str, TokenIndexer] = None,
                  target_token_indexers: Dict[str, TokenIndexer] = None,
+                 truncate_source_len: int = None,
+                 truncate_target_len: int = None,
                  lazy: bool = False) -> None:
         super().__init__(lazy)
         self._target_namespace = target_namespace
@@ -61,6 +63,8 @@ class CopyNetDatasetReader(DatasetReader):
         self._target_tokenizer = target_tokenizer or self._source_tokenizer
         self._source_token_indexers = source_token_indexers or {"tokens": SingleIdTokenIndexer()}
         self._target_token_indexers = target_token_indexers or self._source_token_indexers
+        self.truncate_source_len = truncate_source_len
+        self.truncate_target_len = truncate_target_len
 
     @staticmethod
     def _read_line(line_num: int, line: str) -> Tuple[Optional[str], Optional[str]]:
@@ -165,6 +169,8 @@ class CopyNetDatasetReader(DatasetReader):
         tokenized_source = self._source_tokenizer.tokenize(source_string)
         tokenized_source.insert(0, Token(START_SYMBOL))
         tokenized_source.append(Token(END_SYMBOL))
+        if self.truncate_source_len is not None:
+            tokenized_source = tokenized_source[:self.truncate_source_len+2]
         source_field = TextField(tokenized_source, self._source_token_indexers)
 
         # For token in the source sentence, we store a sparse array containing
@@ -191,6 +197,8 @@ class CopyNetDatasetReader(DatasetReader):
             tokenized_target = self._target_tokenizer.tokenize(target_string)
             tokenized_target.insert(0, Token(START_SYMBOL))
             tokenized_target.append(Token(END_SYMBOL))
+            if self.truncate_target_len is not None:
+                tokenized_target = tokenized_target[:self.truncate_target_len+2]
             target_field = TextField(tokenized_target, self._target_token_indexers)
 
             # For each token in the target sentence, we keep track of the index
